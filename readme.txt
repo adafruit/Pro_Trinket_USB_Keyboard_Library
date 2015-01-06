@@ -21,3 +21,8 @@ ProTrinketKeyboard is distributed in the hope that it will be useful, but WITHOU
 You should have received a copy of the GNU Lesser General Public
 License along with ProTrinketKeyboard. If not, see
 <http://www.gnu.org/licenses/>.
+
+Version History
+
+Version 1.0  Works with Pro Trinket 5V at 16 MHz  Mike Barela
+Version 1.1  Works with Pro Trinket 5V at 16 MHz and Pro Trinket 3V at 12 MHz Mike Barela
