@@ -64,17 +64,17 @@ Thanks to Oleg Semyonov for his help with the IAR tools port!
 #define _BV(x) (1 << (x))
 
 /* assembler compatibility macros */
-#define nop2 rjmp $ + 2 /* jump to next instruction */
-#define XL r26
-#define XH r27
-#define YL r28
-#define YH r29
-#define ZL r30
-#define ZH r31
-#define lo8(x) LOW(x)
-#define hi8(x)                                                                 \
-  (((x) >> 8) & 0xff) /* not HIGH to allow XLINK to make a proper range check  \
-                       */
+// clang-format off
+#define nop2    rjmp    $+2 /* jump to next instruction */
+// calng-format on
+#define XL      r26
+#define XH      r27
+#define YL      r28
+#define YH      r29
+#define ZL      r30
+#define ZH      r31
+#define lo8(x)  LOW(x)
+#define hi8(x)  (((x)>>8) & 0xff)   /* not HIGH to allow XLINK to make a proper range check */
 
 /* Depending on the device you use, you may get problems with the way usbdrv.h
  * handles the differences between devices. Since IAR does not use #defines
@@ -91,33 +91,36 @@ Thanks to Oleg Semyonov for his help with the IAR tools port!
 
 /* #define F_CPU   _MCU_CLOCK_FREQUENCY_    seems to be defined automatically */
 
-#include <delay.h>
 #include <io.h>
+#include <delay.h>
 
-#define __attribute__(arg) /* not supported on IAR */
+#define __attribute__(arg)  /* not supported on IAR */
 
-#define PROGMEM __flash
-#define USB_READ_FLASH(addr) (*(PROGMEM char *)(addr))
+#define PROGMEM                 __flash
+#define USB_READ_FLASH(addr)    (*(PROGMEM char *)(addr))
 
 #ifndef __ASSEMBLER__
-static inline void cli(void) {
-#asm("cli");
+static inline void  cli(void)
+{
+    #asm("cli");
 }
-static inline void sei(void) {
-#asm("sei");
+static inline void  sei(void)
+{
+    #asm("sei");
 }
 #endif
-#define _delay_ms(t) delay_ms(t)
-#define _BV(x) (1 << (x))
-#define USB_CFG_USE_SWITCH_STATEMENT                                           \
-  1 /* macro for if() cascase fails for unknown reason */
+#define _delay_ms(t)    delay_ms(t)
+#define _BV(x)          (1 << (x))
+#define USB_CFG_USE_SWITCH_STATEMENT 1  /* macro for if() cascase fails for unknown reason */
 
-#define macro .macro
-#define endm .endmacro
-#define nop2 rjmp.+ 0 /* jump to next instruction */
+#define macro   .macro
+#define endm    .endmacro
+// clang-format off
+#define nop2    rjmp    .+0 /* jump to next instruction */
+// clang-format on
 
 /* ------------------------------------------------------------------------- */
-#else                 /* default development environment is avr-gcc/avr-libc */
+#else /* default development environment is avr-gcc/avr-libc */
 /* ------------------------------------------------------------------------- */
 
 #include <avr/io.h>
@@ -138,7 +141,9 @@ static inline void sei(void) {
 
 #define macro .macro
 #define endm .endm
-#define nop2 rjmp.+ 0 /* jump to next instruction */
+// clang-format off
+#define nop2    rjmp    .+0 /* jump to next instruction */
+// clang-format on
 
 #endif /* development environment */
 
