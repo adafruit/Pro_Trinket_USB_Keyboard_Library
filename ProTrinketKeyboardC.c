@@ -20,15 +20,15 @@ License along with ProTrinketKeyboard. If not, see
 <http://www.gnu.org/licenses/>.
 */
 
-#include "ProTrinketKeyboardC.h"
 #include "cmdline_defs.h"
+#include "ProTrinketKeyboardC.h"
 #include "usbconfig.h"
 #include "usbdrv/usbdrv.h"
-#include <avr/interrupt.h>
 #include <avr/pgmspace.h>
+#include <avr/interrupt.h>
 #include <avr/power.h>
-#include <stdint.h>
 #include <util/delay.h>
+#include <stdint.h>
 
 uint8_t report_buffer[8];
 char usb_hasCommed = 0;
