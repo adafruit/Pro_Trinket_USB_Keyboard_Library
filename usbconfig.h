@@ -4,8 +4,7 @@
  * Creation Date: 2005-04-01
  * Tabsize: 4
  * Copyright: (c) 2005 by OBJECTIVE DEVELOPMENT Software GmbH
- * License: GNU GPL v2 (see License.txt), GNU GPL v3 or proprietary
- * (CommercialLicense.txt)
+ * License: GNU GPL v2 (see License.txt), GNU GPL v3 or proprietary (CommercialLicense.txt)
  */
 
 /*
@@ -14,37 +13,31 @@ This file has been modified for use as a part of ProTrinketKeyboard
 Copyright (c) 2015 Adafruit Industries
 All rights reserved.
 
-ProTrinketKeyboard is free software: you can redistribute it and/or modify it
-under the terms of the GNU Lesser General Public License as published by the
-Free Software Foundation, either version 3 of the License, or (at your option)
-any later version.
+ProTrinketKeyboard is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
-ProTrinketKeyboard is distributed in the hope that it will be useful, but
-WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for
-more details.
+ProTrinketKeyboard is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for more details.
 
 You should have received a copy of the GNU Lesser General Public
 License along with ProTrinketKeyboard. If not, see
 <http://www.gnu.org/licenses/>.
 */
 
-#include "cmdline_defs.h"
+#include "cmdline_defs.h" 
 
 #ifndef __usbconfig_h_included__
 #define __usbconfig_h_included__
 
 /* ------------- Hardware Config ---------------------------- */
 
-#define USB_CFG_IOPORTNAME D
+#define USB_CFG_IOPORTNAME      D
 /* This is the port where the USB bus is connected. When you configure it to
  * "B", the registers PORTB, PINB and DDRB will be used.
  */
-#define USB_CFG_DMINUS_BIT 7
+#define USB_CFG_DMINUS_BIT      7
 /* This is the bit number in USB_CFG_IOPORT where the USB D- line is connected.
  * This may be any bit in the port.
  */
-#define USB_CFG_DPLUS_BIT 2
+#define USB_CFG_DPLUS_BIT       2
 /* This is the bit number in USB_CFG_IOPORT where the USB D+ line is connected.
  * This may be any bit in the port. Please note that D+ must also be connected
  * to interrupt pin INT0! [You can also use other interrupts, see section
@@ -54,19 +47,19 @@ License along with ProTrinketKeyboard. If not, see
  * markers every millisecond.]
  */
 
-#define USB_CFG_CLOCK_KHZ (F_CPU / 1000)
+#define USB_CFG_CLOCK_KHZ      (F_CPU/1000)
 #if USB_CFG_CLOCK_KHZ != 12000 && USB_CFG_CLOCK_KHZ != 16000
-#error "Non-standard clock rate for Pro Trinket detected"
+#  error "Non-standard clock rate for Pro Trinket detected"
 #endif
-/* Clock rate of the AVR in kHz. Legal values are 12000 and 16000
+/* Clock rate of the AVR in kHz. Legal values are 12000 and 16000  
  * for Pro Trinket.  Since F_CPU should be defined to your actual
  * clock rate anyway, you should not need to modify this setting.
  */
-#define USB_CFG_CHECK_CRC 0
+#define USB_CFG_CHECK_CRC       0
 /* Define this to 1 if you want that the driver checks integrity
  * of incoming data packets (CRC checks). CRC checks cost quite a
- * bit of code size and are currently only available for 18 MHz
- * crystal clock. You must choose USB_CFG_CLOCK_KHZ = 18000 if
+ * bit of code size and are currently only available for 18 MHz 
+ * crystal clock. You must choose USB_CFG_CLOCK_KHZ = 18000 if 
  * you enable this option (not available for Pro Trinket).
  */
 
@@ -86,18 +79,18 @@ License along with ProTrinketKeyboard. If not, see
 
 /* ------------ Functional Range ---------------------------- */
 
-#define USB_CFG_HAVE_INTRIN_ENDPOINT 1
+#define USB_CFG_HAVE_INTRIN_ENDPOINT    1
 /* Define this to 1 if you want to compile a version with two endpoints: The
  * default control endpoint 0 and an interrupt-in endpoint (any other endpoint
  * number).
  */
-#define USB_CFG_HAVE_INTRIN_ENDPOINT3 0
+#define USB_CFG_HAVE_INTRIN_ENDPOINT3   0
 /* Define this to 1 if you want to compile a version with three endpoints: The
  * default control endpoint 0, an interrupt-in endpoint 3 (or the number
  * configured below) and a catch-all default interrupt-in endpoint as above.
  * You must also define USB_CFG_HAVE_INTRIN_ENDPOINT to 1 for this feature.
  */
-#define USB_CFG_EP3_NUMBER 3
+#define USB_CFG_EP3_NUMBER              3
 /* If the so-called endpoint 3 is used, it can now be configured to any other
  * endpoint number (except 0) with this macro. Default if undefined is 3.
  */
@@ -107,13 +100,13 @@ License along with ProTrinketKeyboard. If not, see
  * Since the token is toggled BEFORE sending any data, the first packet is
  * sent with the oposite value of this configuration!
  */
-#define USB_CFG_IMPLEMENT_HALT 0
+#define USB_CFG_IMPLEMENT_HALT          0
 /* Define this to 1 if you also want to implement the ENDPOINT_HALT feature
  * for endpoint 1 (interrupt endpoint). Although you may not need this feature,
  * it is required by the standard. We have made it a config option because it
  * bloats the code considerably.
  */
-#define USB_CFG_SUPPRESS_INTR_CODE 0
+#define USB_CFG_SUPPRESS_INTR_CODE      0
 /* Define this to 1 if you want to declare interrupt-in endpoints, but don't
  * want to send any data over them. If this macro is defined to 1, functions
  * usbSetInterrupt() and usbSetInterrupt3() are omitted. This is useful if
@@ -121,54 +114,53 @@ License along with ProTrinketKeyboard. If not, see
  * (e.g. HID), but never want to send any data. This option saves a couple
  * of bytes in flash memory and the transmit buffers in RAM.
  */
-#define USB_CFG_INTR_POLL_INTERVAL 10
+#define USB_CFG_INTR_POLL_INTERVAL      10
 /* If you compile a version with endpoint 1 (interrupt-in), this is the poll
  * interval. The value is in milliseconds and must not be less than 10 ms for
  * low speed devices.
  */
-#define USB_CFG_IS_SELF_POWERED 0
+#define USB_CFG_IS_SELF_POWERED         0
 /* Define this to 1 if the device has its own power supply. Set it to 0 if the
  * device is powered from the USB bus.
  */
-#define USB_CFG_MAX_BUS_POWER 200
+#define USB_CFG_MAX_BUS_POWER           200
 /* Set this variable to the maximum USB bus power consumption of your device.
  * The value is in milliamperes. [It will be divided by two since USB
  * communicates power requirements in units of 2 mA.]
  */
-#define USB_CFG_IMPLEMENT_FN_WRITE 1
+#define USB_CFG_IMPLEMENT_FN_WRITE      1
 /* Set this to 1 if you want usbFunctionWrite() to be called for control-out
  * transfers. Set it to 0 if you don't need it and want to save a couple of
  * bytes.
  */
-#define USB_CFG_IMPLEMENT_FN_READ 0
+#define USB_CFG_IMPLEMENT_FN_READ       0
 /* Set this to 1 if you need to send control replies which are generated
  * "on the fly" when usbFunctionRead() is called. If you only want to send
  * data from a static buffer, set it to 0 and return the data from
  * usbFunctionSetup(). This saves a couple of bytes.
  */
-#define USB_CFG_IMPLEMENT_FN_WRITEOUT 0
+#define USB_CFG_IMPLEMENT_FN_WRITEOUT   0
 /* Define this to 1 if you want to use interrupt-out (or bulk out) endpoints.
  * You must implement the function usbFunctionWriteOut() which receives all
  * interrupt/bulk data sent to any endpoint other than 0. The endpoint number
  * can be found in 'usbRxToken'.
  */
-#define USB_CFG_HAVE_FLOWCONTROL 0
+#define USB_CFG_HAVE_FLOWCONTROL        0
 /* Define this to 1 if you want flowcontrol over USB data. See the definition
  * of the macros usbDisableAllRequests() and usbEnableAllRequests() in
  * usbdrv.h.
  */
-#define USB_CFG_DRIVER_FLASH_PAGE 0
+#define USB_CFG_DRIVER_FLASH_PAGE       0
 /* If the device has more than 64 kBytes of flash, define this to the 64 k page
  * where the driver's constants (descriptors) are located. Or in other words:
  * Define this to 1 for boot loaders on the ATMega128.
  */
-#define USB_CFG_LONG_TRANSFERS 0
+#define USB_CFG_LONG_TRANSFERS          0
 /* Define this to 1 if you want to send/receive blocks of more than 254 bytes
  * in a single control-in or control-out transfer. Note that the capability
  * for long transfers increases the driver size.
  */
-/* #define USB_RX_USER_HOOK(data, len)     if(usbRxToken == (uchar)USBPID_SETUP)
- * blinkLED(); */
+/* #define USB_RX_USER_HOOK(data, len)     if(usbRxToken == (uchar)USBPID_SETUP) blinkLED(); */
 /* This macro is a hook if you want to do unconventional things. If it is
  * defined, it's inserted at the beginning of received message processing.
  * If you eat the received message and don't want default processing to
@@ -184,7 +176,7 @@ License along with ProTrinketKeyboard. If not, see
 /* This macro (if defined) is executed when a USB SET_ADDRESS request was
  * received.
  */
-#define USB_COUNT_SOF 0
+#define USB_COUNT_SOF                   0
 /* define this macro to 1 if you need the global variable "usbSofCount" which
  * counts SOF packets. This feature requires that the hardware interrupt is
  * connected to D- instead of D+.
@@ -208,7 +200,7 @@ License along with ProTrinketKeyboard. If not, see
  * Please note that Start Of Frame detection works only if D- is wired to the
  * interrupt, not D+. THIS IS DIFFERENT THAN MOST EXAMPLES!
  */
-#define USB_CFG_CHECK_DATA_TOGGLING 0
+#define USB_CFG_CHECK_DATA_TOGGLING     0
 /* define this macro to 1 if you want to filter out duplicate data packets
  * sent by the host. Duplicates occur only as a consequence of communication
  * errors, when the host does not receive an ACK. Please note that you need to
@@ -216,25 +208,19 @@ License along with ProTrinketKeyboard. If not, see
  * usbFunctionWrite(). Use the global usbCurrentDataToken and a static variable
  * for each control- and out-endpoint to check for duplicate packets.
  */
-#define USB_CFG_HAVE_MEASURE_FRAME_LENGTH 1
+#define USB_CFG_HAVE_MEASURE_FRAME_LENGTH   1
 /* define this macro to 1 if you want the function usbMeasureFrameLength()
  * compiled in. This function can be used to calibrate the AVR's RC oscillator.
  */
-#if defined(__AVR_ATtiny85__) || defined(__AVR_ATtiny45__) ||                  \
-    defined(__AVR_ATtiny25__)
+#if defined(__AVR_ATtiny85__) || defined(__AVR_ATtiny45__) || defined(__AVR_ATtiny25__) 
 #ifndef __ASSEMBLER__
-#include <avr/interrupt.h> // for sei()
+#include <avr/interrupt.h>  // for sei()
 extern void calibrateOscillator(void);
 #endif
-#define USB_RESET_HOOK(resetStarts)                                            \
-  if (!resetStarts) {                                                          \
-    cli();                                                                     \
-    calibrateOscillator();                                                     \
-    sei();                                                                     \
-  }
+#define USB_RESET_HOOK(resetStarts)  if(!resetStarts){cli(); calibrateOscillator(); sei();}
 #endif
 
-#define USB_USE_FAST_CRC 0
+#define USB_USE_FAST_CRC                0
 /* The assembler module has two implementations for the CRC algorithm. One is
  * faster, the other is smaller. This CRC routine is only used for transmitted
  * messages where timing is not critical. The faster routine needs 31 cycles
@@ -245,12 +231,12 @@ extern void calibrateOscillator(void);
 
 /* ---------- Device Description --------------------------- */
 
-#define USB_CFG_VENDOR_ID 0x81, 0x17
+#define  USB_CFG_VENDOR_ID       0x81, 0x17
 /* USB vendor ID for the device, low byte first. If you have registered your
  * own Vendor ID, define it here. Otherwise you may use one of obdev's free
  * shared VID/PID pairs. Be sure to read USB-IDs-for-free.txt for rules!
  */
-#define USB_CFG_DEVICE_ID 0x34, 0x24 /* = 0x05dc = 1500 */
+#define  USB_CFG_DEVICE_ID       0x34, 0x24 /* = 0x05dc = 1500 */
 /* This is the ID of the product, low byte first. It is interpreted in the
  * scope of the vendor ID. If you have registered your own VID with usb.org
  * or if you have licensed a PID from somebody else, define it here. Otherwise
@@ -261,10 +247,10 @@ extern void calibrateOscillator(void);
  * with libusb: 0x16c0/0x5dc.  Use this VID/PID pair ONLY if you understand
  * the implications!
  */
-#define USB_CFG_DEVICE_VERSION 0x00, 0x01
+#define USB_CFG_DEVICE_VERSION  0x00, 0x01
 /* Version number of the device: Minor number first, then major number.
  */
-#define USB_CFG_VENDOR_NAME 'A', 'd', 'a', 'f', 'r', 'u', 'i', 't'
+#define USB_CFG_VENDOR_NAME     'A', 'd', 'a', 'f', 'r', 'u', 'i', 't'
 #define USB_CFG_VENDOR_NAME_LEN 8
 /* These two values define the vendor name returned by the USB device. The name
  * must be given as a list of characters under single quotes. The characters
@@ -274,9 +260,7 @@ extern void calibrateOscillator(void);
  * obdev's free shared VID/PID pair. See the file USB-IDs-for-free.txt for
  * details.
  */
-#define USB_CFG_DEVICE_NAME                                                    \
-  'P', 'r', 'o', ' ', 'T', 'r', 'i', 'n', 'k', 'e', 't', ' ', 'K', 'e', 'y',   \
-      'b', 'o', 'a', 'r', 'd',
+#define USB_CFG_DEVICE_NAME   'P', 'r', 'o', ' ', 'T', 'r', 'i', 'n', 'k', 'e', 't', ' ', 'K', 'e', 'y', 'b', 'o', 'a', 'r', 'd',
 #define USB_CFG_DEVICE_NAME_LEN 20
 /* Same as above for the device name. If you don't want a device name, undefine
  * the macros. See the file USB-IDs-for-free.txt before you assign a name if
@@ -291,19 +275,18 @@ extern void calibrateOscillator(void);
  * to fine tune control over USB descriptors such as the string descriptor
  * for the serial number.
  */
-#define USB_CFG_DEVICE_CLASS                                                   \
-  0x00 // 0x00 means "check the interface class instead"
-#define USB_CFG_DEVICE_SUBCLASS 0x00
+#define USB_CFG_DEVICE_CLASS        0x00 // 0x00 means "check the interface class instead"
+#define USB_CFG_DEVICE_SUBCLASS     0x00
 /* See USB specification if you want to conform to an existing device class.
  * Class 0xff is "vendor specific".
  */
-#define USB_CFG_INTERFACE_CLASS 0x03 // 0x03 means HID
-#define USB_CFG_INTERFACE_SUBCLASS 0x00
-#define USB_CFG_INTERFACE_PROTOCOL 0x00
+#define USB_CFG_INTERFACE_CLASS     0x03 // 0x03 means HID
+#define USB_CFG_INTERFACE_SUBCLASS  0x00
+#define USB_CFG_INTERFACE_PROTOCOL  0x00
 /* See USB specification if you want to conform to an existing device class or
  * protocol.
  */
-#define USB_CFG_HID_REPORT_DESCRIPTOR_LENGTH 63
+#define USB_CFG_HID_REPORT_DESCRIPTOR_LENGTH    63
 /* Define this to the length of the HID report descriptor, if you implement
  * an HID device. Otherwise don't define it or define it to 0.
  * If you use this define, you must add a PROGMEM character array named
@@ -368,16 +351,17 @@ extern void calibrateOscillator(void);
  * };
  */
 
-#define USB_CFG_DESCR_PROPS_DEVICE 0
-#define USB_CFG_DESCR_PROPS_CONFIGURATION 0
-#define USB_CFG_DESCR_PROPS_STRINGS 0
-#define USB_CFG_DESCR_PROPS_STRING_0 0
-#define USB_CFG_DESCR_PROPS_STRING_VENDOR 0
-#define USB_CFG_DESCR_PROPS_STRING_PRODUCT 0
-#define USB_CFG_DESCR_PROPS_STRING_SERIAL_NUMBER 0
-#define USB_CFG_DESCR_PROPS_HID 0
-#define USB_CFG_DESCR_PROPS_HID_REPORT 0
-#define USB_CFG_DESCR_PROPS_UNKNOWN 0
+#define USB_CFG_DESCR_PROPS_DEVICE                  0
+#define USB_CFG_DESCR_PROPS_CONFIGURATION           0
+#define USB_CFG_DESCR_PROPS_STRINGS                 0
+#define USB_CFG_DESCR_PROPS_STRING_0                0
+#define USB_CFG_DESCR_PROPS_STRING_VENDOR           0
+#define USB_CFG_DESCR_PROPS_STRING_PRODUCT          0
+#define USB_CFG_DESCR_PROPS_STRING_SERIAL_NUMBER    0
+#define USB_CFG_DESCR_PROPS_HID                     0
+#define USB_CFG_DESCR_PROPS_HID_REPORT              0
+#define USB_CFG_DESCR_PROPS_UNKNOWN                 0
+
 
 #define usbMsgPtr_t unsigned short
 /* If usbMsgPtr_t is not defined, it defaults to 'uchar *'. We define it to
@@ -395,7 +379,7 @@ extern void calibrateOscillator(void);
  * which is not fully supported (such as IAR C) or if you use a differnt
  * interrupt than INT0, you may have to define some of these.
  */
-/* ones below are for Trinket, Pro Trinket can use V-USB values
+/* ones below are for Trinket, Pro Trinket can use V-USB values 
  * #define USB_INTR_CFG            PCMSK
  * #define USB_INTR_CFG_SET        (1 << USB_CFG_DPLUS_BIT)
  * #define USB_INTR_CFG_CLR        0
@@ -403,8 +387,9 @@ extern void calibrateOscillator(void);
  * #define USB_INTR_ENABLE_BIT     PCIE
  * #define USB_INTR_PENDING        GIFR
  * #define USB_INTR_PENDING_BIT    PCIF
- */
+*/
 /* Interrupt vector for Pro Trinket's ATmega 328 */
-#define USB_INTR_VECTOR INT0_vect
+#define USB_INTR_VECTOR         INT0_vect
+
 
 #endif /* __usbconfig_h_included__ */

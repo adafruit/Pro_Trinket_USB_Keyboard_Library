@@ -1,7 +1,6 @@
 /*
- * This file provides the compiler any definitions that would usually go in the
-command line options, since Arduino IDE does not allow such additions
-
+ * This file provides the compiler any definitions that would usually go in the command line options, since Arduino IDE does not allow such additions
+ 
 Copyright (c) 2015 Adafruit Industries
 All rights reserved.
 
