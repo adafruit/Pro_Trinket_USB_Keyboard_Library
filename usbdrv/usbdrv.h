@@ -624,8 +624,9 @@ extern
  * we better trigger on falling edge
  */
 #else
-#define USB_INTR_CFG_SET ((1 << ISC00) | (1 << ISC01)) /* cfg for rising edge  \
-                                                        */
+#define USB_INTR_CFG_SET                                                       \
+  ((1 << ISC00) | (1 << ISC01)) /* cfg for rising edge                         \
+                                 */
 #endif
 #endif
 #ifndef USB_INTR_CFG_CLR   /* allow user to override our default */
@@ -763,7 +764,7 @@ typedef struct usbRequest {
 #define USBDESCR_HID_PHYS 0x23
 
 //#define USBATTR_BUSPOWER        0x80  // USB 1.1 does not define this value
-//any more
+// any more
 #define USBATTR_BUSPOWER 0
 #define USBATTR_SELFPOWER 0x40
 #define USBATTR_REMOTEWAKE 0x20
