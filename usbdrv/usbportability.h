@@ -4,7 +4,8 @@
  * Creation Date: 2008-06-17
  * Tabsize: 4
  * Copyright: (c) 2008 by OBJECTIVE DEVELOPMENT Software GmbH
- * License: GNU GPL v2 (see License.txt), GNU GPL v3 or proprietary (CommercialLicense.txt)
+ * License: GNU GPL v2 (see License.txt), GNU GPL v3 or proprietary
+ * (CommercialLicense.txt)
  */
 
 /*
@@ -26,43 +27,46 @@ Thanks to Oleg Semyonov for his help with the IAR tools port!
 /* We check explicitly for IAR and CodeVision. Default is avr-gcc/avr-libc. */
 
 /* ------------------------------------------------------------------------- */
-#if defined __IAR_SYSTEMS_ICC__ || defined __IAR_SYSTEMS_ASM__  /* check for IAR */
+#if defined __IAR_SYSTEMS_ICC__ ||                                             \
+    defined __IAR_SYSTEMS_ASM__ /* check for IAR */
 /* ------------------------------------------------------------------------- */
 
 #ifndef ENABLE_BIT_DEFINITIONS
-#   define ENABLE_BIT_DEFINITIONS	1   /* Enable bit definitions */
+#define ENABLE_BIT_DEFINITIONS 1 /* Enable bit definitions */
 #endif
 
 /* Include IAR headers */
 #include <ioavr.h>
 #ifndef __IAR_SYSTEMS_ASM__
-#   include <inavr.h>
+#include <inavr.h>
 #endif
 
-#define __attribute__(arg)  /* not supported on IAR */
+#define __attribute__(arg) /* not supported on IAR */
 
 #ifdef __IAR_SYSTEMS_ASM__
-#   define __ASSEMBLER__    /* IAR does not define standard macro for asm */
+#define __ASSEMBLER__ /* IAR does not define standard macro for asm */
 #endif
 
 #ifdef __HAS_ELPM__
-#   define PROGMEM __farflash
+#define PROGMEM __farflash
 #else
-#   define PROGMEM __flash
+#define PROGMEM __flash
 #endif
 
-#define USB_READ_FLASH(addr)    (*(PROGMEM char *)(addr))
+#define USB_READ_FLASH(addr) (*(PROGMEM char *)(addr))
 
 /* The following definitions are not needed by the driver, but may be of some
  * help if you port a gcc based project to IAR.
  */
-#define cli()       __disable_interrupt()
-#define sei()       __enable_interrupt()
+#define cli() __disable_interrupt()
+#define sei() __enable_interrupt()
 #define wdt_reset() __watchdog_reset()
-#define _BV(x)      (1 << (x))
+#define _BV(x) (1 << (x))
 
 /* assembler compatibility macros */
+// clang-format off
 #define nop2    rjmp    $+2 /* jump to next instruction */
+// calng-format on
 #define XL      r26
 #define XH      r27
 #define YL      r28
@@ -111,33 +115,40 @@ static inline void  sei(void)
 
 #define macro   .macro
 #define endm    .endmacro
+// clang-format off
 #define nop2    rjmp    .+0 /* jump to next instruction */
+// clang-format on
 
 /* ------------------------------------------------------------------------- */
-#else   /* default development environment is avr-gcc/avr-libc */
+#else /* default development environment is avr-gcc/avr-libc */
 /* ------------------------------------------------------------------------- */
 
 #include <avr/io.h>
 #ifdef __ASSEMBLER__
+// clang-format off
 #   define _VECTOR(N)   __vector_ ## N   /* io.h does not define this for asm */
+// clang-format on
 #else
-#   include <avr/pgmspace.h>
+#include <avr/pgmspace.h>
 #endif
 
 #if USB_CFG_DRIVER_FLASH_PAGE
-#   define USB_READ_FLASH(addr)    pgm_read_byte_far(((long)USB_CFG_DRIVER_FLASH_PAGE << 16) | (long)(addr))
+#define USB_READ_FLASH(addr)                                                   \
+  pgm_read_byte_far(((long)USB_CFG_DRIVER_FLASH_PAGE << 16) | (long)(addr))
 #else
-#   define USB_READ_FLASH(addr)    pgm_read_byte(addr)
+#define USB_READ_FLASH(addr) pgm_read_byte(addr)
 #endif
 
-#define macro   .macro
-#define endm    .endm
+#define macro .macro
+#define endm .endm
+// clang-format off
 #define nop2    rjmp    .+0 /* jump to next instruction */
+// clang-format on
 
-#endif  /* development environment */
+#endif /* development environment */
 
 /* for conveniecne, ensure that PRG_RDB exists */
 #ifndef PRG_RDB
-#   define PRG_RDB(addr)    USB_READ_FLASH(addr)
+#define PRG_RDB(addr) USB_READ_FLASH(addr)
 #endif
-#endif  /* __usbportability_h_INCLUDED__ */
+#endif /* __usbportability_h_INCLUDED__ */
