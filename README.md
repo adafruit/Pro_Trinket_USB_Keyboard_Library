@@ -1,4 +1,4 @@
-# Adafruit Pro Trinket USB Keyboard Library [![Build Status](https://github.com/adafruit/Adafruit_Pro_Trinket_USB_Keyboard_Library/workflows/Arduino%20Library%20CI/badge.svg)](https://github.com/adafruit/Pro_Trinket_USB_Keyboard_Library/actions)
+# Adafruit Pro Trinket USB Keyboard Library [![Build Status](https://github.com/adafruit/Pro_Trinket_USB_Keyboard_Library/workflows/Arduino%20Library%20CI/badge.svg)](https://github.com/adafruit/Pro_Trinket_USB_Keyboard_Library/actions)
 
 ProTrinketKeyboard is Adafruit's Pro Trinket USB HID Arduino Library
 
