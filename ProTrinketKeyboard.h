@@ -34,8 +34,8 @@ extern "C" {
 #endif
 
 class Trinket_Keyboard : public Print {
-private:
-public:
+ private:
+ public:
   Trinket_Keyboard(); // empty constructor, ignore me
   void begin();       // starts the USB driver, causes re-enumeration
   void
@@ -57,7 +57,7 @@ public:
   void pressKey(uint8_t modifiers, uint8_t keycode1);
 
   // presses a list of keys
-  void pressKeys(uint8_t modifiers, uint8_t *keycodes, uint8_t sz);
+  void pressKeys(uint8_t modifiers, uint8_t* keycodes, uint8_t sz);
 
   // type out a single ASCII character
   void typeChar(uint8_t ascii);
@@ -75,8 +75,8 @@ public:
 
 // helps translate ASCII characters into keycode and modifier combinations,
 // while taking into account whether or not caps lock is on
-void ASCII_to_keycode(uint8_t ascii, uint8_t ledState, uint8_t *modifier,
-                      uint8_t *keycode);
+void ASCII_to_keycode(uint8_t ascii, uint8_t ledState, uint8_t* modifier,
+                      uint8_t* keycode);
 
 // an instance that the user can use
 extern Trinket_Keyboard TrinketKeyboard;

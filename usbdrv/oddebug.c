@@ -33,7 +33,7 @@ static void printHex(uchar c) {
   uartPutc(hexAscii(c));
 }
 
-void odDebug(uchar prefix, uchar *data, uchar len) {
+void odDebug(uchar prefix, uchar* data, uchar len) {
   printHex(prefix);
   uartPutc(':');
   while (len--) {

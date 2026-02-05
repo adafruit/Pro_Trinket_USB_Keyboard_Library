@@ -21,12 +21,13 @@ License along with ProTrinketKeyboard. If not, see
 */
 
 #include "ProTrinketKeyboard.h"
-#include "ProTrinketKeyboardC.h"
-#include "cmdline_defs.h"
 
 #include <avr/interrupt.h>
 #include <stdint.h>
 #include <util/delay.h>
+
+#include "ProTrinketKeyboardC.h"
+#include "cmdline_defs.h"
 
 // create an instance that the user can use
 Trinket_Keyboard TrinketKeyboard;
@@ -37,10 +38,14 @@ Trinket_Keyboard::Trinket_Keyboard() {
 }
 
 // starts the USB driver, causes re-enumeration
-void Trinket_Keyboard::begin() { usbBegin(); }
+void Trinket_Keyboard::begin() {
+  usbBegin();
+}
 
 // this must be called at least once every 10ms
-void Trinket_Keyboard::poll() { usbPollWrapper(); }
+void Trinket_Keyboard::poll() {
+  usbPollWrapper();
+}
 
 void Trinket_Keyboard::pressKey(uint8_t modifiers, uint8_t keycode1) {
   pressKey(modifiers, keycode1, 0, 0, 0, 0, 0);
@@ -85,7 +90,7 @@ void Trinket_Keyboard::pressKey(uint8_t modifiers, uint8_t keycode1,
   usbReportSend();
 }
 
-void Trinket_Keyboard::pressKeys(uint8_t modifiers, uint8_t *keycodes,
+void Trinket_Keyboard::pressKeys(uint8_t modifiers, uint8_t* keycodes,
                                  uint8_t sz) {
   report_buffer[0] = modifiers;
   report_buffer[1] = 0; // reserved
@@ -108,8 +113,8 @@ size_t Trinket_Keyboard::write(uint8_t ascii) {
   return 1;
 }
 
-void ASCII_to_keycode(uint8_t ascii, uint8_t ledState, uint8_t *modifier,
-                      uint8_t *keycode) {
+void ASCII_to_keycode(uint8_t ascii, uint8_t ledState, uint8_t* modifier,
+                      uint8_t* keycode) {
   *keycode = 0x00;
   *modifier = 0x00;
 
@@ -141,126 +146,130 @@ void ASCII_to_keycode(uint8_t ascii, uint8_t ledState, uint8_t *modifier,
   } else {
     switch (ascii) // convert ascii to keycode according to documentation
     {
-    case '!':
-      *modifier = _BV(1); // hold shift
-      *keycode = 29 + 1;
-      break;
-    case '@':
-      *modifier = _BV(1); // hold shift
-      *keycode = 29 + 2;
-      break;
-    case '#':
-      *modifier = _BV(1); // hold shift
-      *keycode = 29 + 3;
-      break;
-    case '$':
-      *modifier = _BV(1); // hold shift
-      *keycode = 29 + 4;
-      break;
-    case '%':
-      *modifier = _BV(1); // hold shift
-      *keycode = 29 + 5;
-      break;
-    case '^':
-      *modifier = _BV(1); // hold shift
-      *keycode = 29 + 6;
-      break;
-    case '&':
-      *modifier = _BV(1); // hold shift
-      *keycode = 29 + 7;
-      break;
-    case '*':
-      *modifier = _BV(1); // hold shift
-      *keycode = 29 + 8;
-      break;
-    case '(':
-      *modifier = _BV(1); // hold shift
-      *keycode = 29 + 9;
-      break;
-    case ')':
-      *modifier = _BV(1); // hold shift
-      *keycode = 0x27;
-      break;
-    case '~':
-      *modifier = _BV(1); // hold shift
-                          // fall through
-    case '`':
-      *keycode = 0x35;
-      break;
-    case '_':
-      *modifier = _BV(1); // hold shift
-                          // fall through
-    case '-':
-      *keycode = 0x2D;
-      break;
-    case '+':
-      *modifier = _BV(1); // hold shift
-                          // fall through
-    case '=':
-      *keycode = 0x2E;
-      break;
-    case '{':
-      *modifier = _BV(1); // hold shift
-                          // fall through
-    case '[':
-      *keycode = 0x2F;
-      break;
-    case '}':
-      *modifier = _BV(1); // hold shift
-                          // fall through
-    case ']':
-      *keycode = 0x30;
-      break;
-    case '|':
-      *modifier = _BV(1); // hold shift
-                          // fall through
-    case '\\':
-      *keycode = 0x31;
-      break;
-    case ':':
-      *modifier = _BV(1); // hold shift
-                          // fall through
-    case ';':
-      *keycode = 0x33;
-      break;
-    case '"':
-      *modifier = _BV(1); // hold shift
-                          // fall through
-    case '\'':
-      *keycode = 0x34;
-      break;
-    case '<':
-      *modifier = _BV(1); // hold shift
-                          // fall through
-    case ',':
-      *keycode = 0x36;
-      break;
-    case '>':
-      *modifier = _BV(1); // hold shift
-                          // fall through
-    case '.':
-      *keycode = 0x37;
-      break;
-    case '?':
-      *modifier = _BV(1); // hold shift
-                          // fall through
-    case '/':
-      *keycode = 0x38;
-      break;
-    case ' ':
-      *keycode = 0x2C;
-      break;
-    case '\t':
-      *keycode = 0x2B;
-      break;
-    case '\n':
-      *keycode = 0x28;
-      break;
+      case '!':
+        *modifier = _BV(1); // hold shift
+        *keycode = 29 + 1;
+        break;
+      case '@':
+        *modifier = _BV(1); // hold shift
+        *keycode = 29 + 2;
+        break;
+      case '#':
+        *modifier = _BV(1); // hold shift
+        *keycode = 29 + 3;
+        break;
+      case '$':
+        *modifier = _BV(1); // hold shift
+        *keycode = 29 + 4;
+        break;
+      case '%':
+        *modifier = _BV(1); // hold shift
+        *keycode = 29 + 5;
+        break;
+      case '^':
+        *modifier = _BV(1); // hold shift
+        *keycode = 29 + 6;
+        break;
+      case '&':
+        *modifier = _BV(1); // hold shift
+        *keycode = 29 + 7;
+        break;
+      case '*':
+        *modifier = _BV(1); // hold shift
+        *keycode = 29 + 8;
+        break;
+      case '(':
+        *modifier = _BV(1); // hold shift
+        *keycode = 29 + 9;
+        break;
+      case ')':
+        *modifier = _BV(1); // hold shift
+        *keycode = 0x27;
+        break;
+      case '~':
+        *modifier = _BV(1); // hold shift
+                            // fall through
+      case '`':
+        *keycode = 0x35;
+        break;
+      case '_':
+        *modifier = _BV(1); // hold shift
+                            // fall through
+      case '-':
+        *keycode = 0x2D;
+        break;
+      case '+':
+        *modifier = _BV(1); // hold shift
+                            // fall through
+      case '=':
+        *keycode = 0x2E;
+        break;
+      case '{':
+        *modifier = _BV(1); // hold shift
+                            // fall through
+      case '[':
+        *keycode = 0x2F;
+        break;
+      case '}':
+        *modifier = _BV(1); // hold shift
+                            // fall through
+      case ']':
+        *keycode = 0x30;
+        break;
+      case '|':
+        *modifier = _BV(1); // hold shift
+                            // fall through
+      case '\\':
+        *keycode = 0x31;
+        break;
+      case ':':
+        *modifier = _BV(1); // hold shift
+                            // fall through
+      case ';':
+        *keycode = 0x33;
+        break;
+      case '"':
+        *modifier = _BV(1); // hold shift
+                            // fall through
+      case '\'':
+        *keycode = 0x34;
+        break;
+      case '<':
+        *modifier = _BV(1); // hold shift
+                            // fall through
+      case ',':
+        *keycode = 0x36;
+        break;
+      case '>':
+        *modifier = _BV(1); // hold shift
+                            // fall through
+      case '.':
+        *keycode = 0x37;
+        break;
+      case '?':
+        *modifier = _BV(1); // hold shift
+                            // fall through
+      case '/':
+        *keycode = 0x38;
+        break;
+      case ' ':
+        *keycode = 0x2C;
+        break;
+      case '\t':
+        *keycode = 0x2B;
+        break;
+      case '\n':
+        *keycode = 0x28;
+        break;
     }
   }
 }
 
-uint8_t Trinket_Keyboard::getLEDstate() { return led_state; }
+uint8_t Trinket_Keyboard::getLEDstate() {
+  return led_state;
+}
 
 // checks if USB is connected, 0 if not connected
-char Trinket_Keyboard::isConnected() { return usb_hasCommed; }
+char Trinket_Keyboard::isConnected() {
+  return usb_hasCommed;
+}

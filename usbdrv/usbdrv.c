@@ -9,6 +9,7 @@
  */
 
 #include "usbdrv.h"
+
 #include "oddebug.h"
 
 /*
@@ -99,7 +100,7 @@ PROGMEM const int usbDescriptorStringDevice[] = {
 
 #if USB_CFG_DESCR_PROPS_STRING_SERIAL_NUMBER == 0 && USB_CFG_SERIAL_NUMBER_LEN
 #undef USB_CFG_DESCR_PROPS_STRING_SERIAL_NUMBER
-#define USB_CFG_DESCR_PROPS_STRING_SERIAL_NUMBER                               \
+#define USB_CFG_DESCR_PROPS_STRING_SERIAL_NUMBER \
   sizeof(usbDescriptorStringSerialNumber)
 PROGMEM const int usbDescriptorStringSerialNumber[] = {
     USB_STRING_DESCRIPTOR_HEADER(USB_CFG_SERIAL_NUMBER_LEN),
@@ -140,7 +141,7 @@ PROGMEM const char usbDescriptorDevice[] = {
 
 #if USB_CFG_DESCR_PROPS_HID_REPORT != 0 && USB_CFG_DESCR_PROPS_HID == 0
 #undef USB_CFG_DESCR_PROPS_HID
-#define USB_CFG_DESCR_PROPS_HID                                                \
+#define USB_CFG_DESCR_PROPS_HID \
   9 /* length of HID descriptor in config descriptor below */
 #endif
 
@@ -230,9 +231,9 @@ static inline void usbResetStall(void) {
 
 #if !USB_CFG_SUPPRESS_INTR_CODE
 #if USB_CFG_HAVE_INTRIN_ENDPOINT
-static void usbGenericSetInterrupt(uchar *data, uchar len,
-                                   usbTxStatus_t *txStatus) {
-  uchar *p;
+static void usbGenericSetInterrupt(uchar* data, uchar len,
+                                   usbTxStatus_t* txStatus) {
+  uchar* p;
   char i;
 
 #if USB_CFG_IMPLEMENT_HALT
@@ -257,13 +258,13 @@ static void usbGenericSetInterrupt(uchar *data, uchar len,
   DBG2(0x21 + (((int)txStatus >> 3) & 3), txStatus->buffer, len + 3);
 }
 
-USB_PUBLIC void usbSetInterrupt(uchar *data, uchar len) {
+USB_PUBLIC void usbSetInterrupt(uchar* data, uchar len) {
   usbGenericSetInterrupt(data, len, &usbTxStatus1);
 }
 #endif
 
 #if USB_CFG_HAVE_INTRIN_ENDPOINT3
-USB_PUBLIC void usbSetInterrupt3(uchar *data, uchar len) {
+USB_PUBLIC void usbSetInterrupt3(uchar* data, uchar len) {
   usbGenericSetInterrupt(data, len, &usbTxStatus3);
 }
 #endif
@@ -277,50 +278,50 @@ USB_PUBLIC void usbSetInterrupt3(uchar *data, uchar len) {
  * cases.
  */
 #if USB_CFG_USE_SWITCH_STATEMENT
-#define SWITCH_START(cmd)                                                      \
-  switch (cmd) {                                                               \
+#define SWITCH_START(cmd) \
+  switch (cmd) {          \
     {
-#define SWITCH_CASE(value)                                                     \
-  }                                                                            \
-  break;                                                                       \
+#define SWITCH_CASE(value) \
+  }                        \
+  break;                   \
   case (value): {
-#define SWITCH_CASE2(v1, v2)                                                   \
-  }                                                                            \
-  break;                                                                       \
-  case (v1):                                                                   \
+#define SWITCH_CASE2(v1, v2) \
+  }                          \
+  break;                     \
+  case (v1):                 \
   case (v2): {
-#define SWITCH_CASE3(v1, v2, v3)                                               \
-  }                                                                            \
-  break;                                                                       \
-  case (v1):                                                                   \
-  case (v2):                                                                   \
+#define SWITCH_CASE3(v1, v2, v3) \
+  }                              \
+  break;                         \
+  case (v1):                     \
+  case (v2):                     \
   case (v3): {
-#define SWITCH_DEFAULT                                                         \
-  }                                                                            \
-  break;                                                                       \
+#define SWITCH_DEFAULT \
+  }                    \
+  break;               \
   default: {
-#define SWITCH_END                                                             \
-  }                                                                            \
+#define SWITCH_END \
+  }                \
   }
 #else
-#define SWITCH_START(cmd)                                                      \
-  {                                                                            \
-    uchar _cmd = cmd;                                                          \
+#define SWITCH_START(cmd) \
+  {                       \
+    uchar _cmd = cmd;     \
     if (0) {
-#define SWITCH_CASE(value)                                                     \
-  }                                                                            \
+#define SWITCH_CASE(value) \
+  }                        \
   else if (_cmd == (value)) {
-#define SWITCH_CASE2(v1, v2)                                                   \
-  }                                                                            \
+#define SWITCH_CASE2(v1, v2) \
+  }                          \
   else if (_cmd == (v1) || _cmd == (v2)) {
-#define SWITCH_CASE3(v1, v2, v3)                                               \
-  }                                                                            \
+#define SWITCH_CASE3(v1, v2, v3) \
+  }                              \
   else if (_cmd == (v1) || _cmd == (v2) || (_cmd == v3)) {
-#define SWITCH_DEFAULT                                                         \
-  }                                                                            \
+#define SWITCH_DEFAULT \
+  }                    \
   else {
-#define SWITCH_END                                                             \
-  }                                                                            \
+#define SWITCH_END \
+  }                \
   }
 #endif
 
@@ -338,22 +339,22 @@ USB_PUBLIC void usbSetInterrupt3(uchar *data, uchar len) {
  * This may cause problems with undefined symbols if compiled without
  * optimizing!
  */
-#define GET_DESCRIPTOR(cfgProp, staticName)                                    \
-  if (cfgProp) {                                                               \
-    if ((cfgProp)&USB_PROP_IS_RAM)                                             \
-      flags = 0;                                                               \
-    if ((cfgProp)&USB_PROP_IS_DYNAMIC) {                                       \
-      len = usbFunctionDescriptor(rq);                                         \
-    } else {                                                                   \
-      len = USB_PROP_LENGTH(cfgProp);                                          \
-      usbMsgPtr = (usbMsgPtr_t)(staticName);                                   \
-    }                                                                          \
+#define GET_DESCRIPTOR(cfgProp, staticName)  \
+  if (cfgProp) {                             \
+    if ((cfgProp) & USB_PROP_IS_RAM)         \
+      flags = 0;                             \
+    if ((cfgProp) & USB_PROP_IS_DYNAMIC) {   \
+      len = usbFunctionDescriptor(rq);       \
+    } else {                                 \
+      len = USB_PROP_LENGTH(cfgProp);        \
+      usbMsgPtr = (usbMsgPtr_t)(staticName); \
+    }                                        \
   }
 
 /* usbDriverDescriptor() is similar to usbFunctionDescriptor(), but used
  * internally for all types of descriptors.
  */
-static inline usbMsgLen_t usbDriverDescriptor(usbRequest_t *rq) {
+static inline usbMsgLen_t usbDriverDescriptor(usbRequest_t* rq) {
   usbMsgLen_t len = 0;
   uchar flags = USB_FLG_MSGPTR_IS_ROM;
 
@@ -384,7 +385,7 @@ static inline usbMsgLen_t usbDriverDescriptor(usbRequest_t *rq) {
   }
   SWITCH_END
 #endif /* USB_CFG_DESCR_PROPS_STRINGS & USB_PROP_IS_DYNAMIC */
-#if USB_CFG_DESCR_PROPS_HID_REPORT /* only support HID descriptors if enabled  \
+#if USB_CFG_DESCR_PROPS_HID_REPORT /* only support HID descriptors if enabled \
                                     */
   SWITCH_CASE(USBDESCR_HID)        /* 0x21 */
   GET_DESCRIPTOR(USB_CFG_DESCR_PROPS_HID, usbDescriptorConfiguration + 18)
@@ -405,9 +406,9 @@ static inline usbMsgLen_t usbDriverDescriptor(usbRequest_t *rq) {
 /* usbDriverSetup() is similar to usbFunctionSetup(), but it's used for
  * standard requests instead of class and custom requests.
  */
-static inline usbMsgLen_t usbDriverSetup(usbRequest_t *rq) {
+static inline usbMsgLen_t usbDriverSetup(usbRequest_t* rq) {
   usbMsgLen_t len = 0;
-  uchar *dataPtr =
+  uchar* dataPtr =
       usbTxBuf + 9; /* there are 2 bytes free space at the end of the buffer */
   uchar value = rq->wValue.bytes[0];
 #if USB_CFG_IMPLEMENT_HALT
@@ -469,8 +470,8 @@ skipMsgPtrAssignment:
  * routine. It distinguishes between SETUP and DATA packets and processes
  * them accordingly.
  */
-static inline void usbProcessRx(uchar *data, uchar len) {
-  usbRequest_t *rq = (void *)data;
+static inline void usbProcessRx(uchar* data, uchar len) {
+  usbRequest_t* rq = (void*)data;
 
   /* usbRxToken can be:
    * 0x2d 00101101 (USBPID_SETUP for setup data)
@@ -546,7 +547,7 @@ static inline void usbProcessRx(uchar *data, uchar len) {
 /* This function is similar to usbFunctionRead(), but it's also called for
  * data handled automatically by the driver (e.g. descriptor reads).
  */
-static uchar usbDeviceRead(uchar *data, uchar len) {
+static uchar usbDeviceRead(uchar* data, uchar len) {
   if (len > 0) { /* don't bother app with 0 sized reads */
 #if USB_CFG_IMPLEMENT_FN_READ
     if (usbMsgFlags & USB_FLG_USE_USER_RW) {
@@ -565,7 +566,7 @@ static uchar usbDeviceRead(uchar *data, uchar len) {
         } while (--i);
       } else { /* RAM data */
         do {
-          *data++ = *((uchar *)r);
+          *data++ = *((uchar*)r);
           r++;
         } while (--i);
       }
@@ -638,7 +639,7 @@ USB_PUBLIC void usbPoll(void) {
     if (usbRxLen > 0) /* only mark as available if not inactivated */
       usbRxLen = 0;
 #else
-    usbRxLen = 0;                /* mark rx buffer as available */
+    usbRxLen = 0; /* mark rx buffer as available */
 #endif
   }
   if (usbTxLen & 0x10) {           /* transmit system idle */
