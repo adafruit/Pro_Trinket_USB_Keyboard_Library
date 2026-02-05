@@ -220,17 +220,17 @@ License along with ProTrinketKeyboard. If not, see
 /* define this macro to 1 if you want the function usbMeasureFrameLength()
  * compiled in. This function can be used to calibrate the AVR's RC oscillator.
  */
-#if defined(__AVR_ATtiny85__) || defined(__AVR_ATtiny45__) ||                  \
+#if defined(__AVR_ATtiny85__) || defined(__AVR_ATtiny45__) || \
     defined(__AVR_ATtiny25__)
 #ifndef __ASSEMBLER__
 #include <avr/interrupt.h> // for sei()
 extern void calibrateOscillator(void);
 #endif
-#define USB_RESET_HOOK(resetStarts)                                            \
-  if (!resetStarts) {                                                          \
-    cli();                                                                     \
-    calibrateOscillator();                                                     \
-    sei();                                                                     \
+#define USB_RESET_HOOK(resetStarts) \
+  if (!resetStarts) {               \
+    cli();                          \
+    calibrateOscillator();          \
+    sei();                          \
   }
 #endif
 
@@ -274,8 +274,8 @@ extern void calibrateOscillator(void);
  * obdev's free shared VID/PID pair. See the file USB-IDs-for-free.txt for
  * details.
  */
-#define USB_CFG_DEVICE_NAME                                                    \
-  'P', 'r', 'o', ' ', 'T', 'r', 'i', 'n', 'k', 'e', 't', ' ', 'K', 'e', 'y',   \
+#define USB_CFG_DEVICE_NAME                                                  \
+  'P', 'r', 'o', ' ', 'T', 'r', 'i', 'n', 'k', 'e', 't', ' ', 'K', 'e', 'y', \
       'b', 'o', 'a', 'r', 'd',
 #define USB_CFG_DEVICE_NAME_LEN 20
 /* Same as above for the device name. If you don't want a device name, undefine
@@ -291,7 +291,7 @@ extern void calibrateOscillator(void);
  * to fine tune control over USB descriptors such as the string descriptor
  * for the serial number.
  */
-#define USB_CFG_DEVICE_CLASS                                                   \
+#define USB_CFG_DEVICE_CLASS \
   0x00 // 0x00 means "check the interface class instead"
 #define USB_CFG_DEVICE_SUBCLASS 0x00
 /* See USB specification if you want to conform to an existing device class.
@@ -311,7 +311,7 @@ extern void calibrateOscillator(void);
  * Don't forget to keep the array and this define in sync!
  */
 
-//#define USB_PUBLIC static
+// #define USB_PUBLIC static
 /* Use the define above if you #include usbdrv.c instead of linking against it.
  * This technique saves a couple of bytes in flash memory.
  */

@@ -34,7 +34,7 @@ the output and a memory block to dump in hex ('data' and 'len').
 #define uchar unsigned char
 #endif
 
-#if DEBUG_LEVEL > 0 && !(defined TXEN || defined TXEN0) /* no UART in device   \
+#if DEBUG_LEVEL > 0 && !(defined TXEN || defined TXEN0) /* no UART in device \
                                                          */
 #warning "Debugging disabled because device has no UART"
 #undef DEBUG_LEVEL
@@ -61,7 +61,7 @@ the output and a memory block to dump in hex ('data' and 'len').
 /* ------------------------------------------------------------------------- */
 
 #if DEBUG_LEVEL > 0
-extern void odDebug(uchar prefix, uchar *data, uchar len);
+extern void odDebug(uchar prefix, uchar* data, uchar len);
 
 /* Try to find our control registers; ATMEL likes to rename these */
 

@@ -27,7 +27,7 @@ Thanks to Oleg Semyonov for his help with the IAR tools port!
 /* We check explicitly for IAR and CodeVision. Default is avr-gcc/avr-libc. */
 
 /* ------------------------------------------------------------------------- */
-#if defined __IAR_SYSTEMS_ICC__ ||                                             \
+#if defined __IAR_SYSTEMS_ICC__ || \
     defined __IAR_SYSTEMS_ASM__ /* check for IAR */
 /* ------------------------------------------------------------------------- */
 
@@ -53,7 +53,7 @@ Thanks to Oleg Semyonov for his help with the IAR tools port!
 #define PROGMEM __flash
 #endif
 
-#define USB_READ_FLASH(addr) (*(PROGMEM char *)(addr))
+#define USB_READ_FLASH(addr) (*(PROGMEM char*)(addr))
 
 /* The following definitions are not needed by the driver, but may be of some
  * help if you port a gcc based project to IAR.
@@ -133,7 +133,7 @@ static inline void  sei(void)
 #endif
 
 #if USB_CFG_DRIVER_FLASH_PAGE
-#define USB_READ_FLASH(addr)                                                   \
+#define USB_READ_FLASH(addr) \
   pgm_read_byte_far(((long)USB_CFG_DRIVER_FLASH_PAGE << 16) | (long)(addr))
 #else
 #define USB_READ_FLASH(addr) pgm_read_byte(addr)
